@@ -1,6 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import './style.css';
+import './Index.less';
+
 const Index = () => (<div>
   <h1>Index</h1>
 </div>);
