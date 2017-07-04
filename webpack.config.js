@@ -3,6 +3,8 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
+const manifest = require('./dll/vendors-manifest.json');
+
 module.exports = (options = {}) => {
   return {
     entry: './src/index.js',
@@ -56,12 +58,15 @@ module.exports = (options = {}) => {
         },
       ],
     },
-
     plugins: [
       new HtmlWebpackPlugin({
         template: './public/index.html',
       }),
       new ExtractTextPlugin('index.css'), // 单独打包css
+      new webpack.DllReferencePlugin({
+        context: __dirname,
+        manifest,
+      }),
       // new webpack.optimize.ModuleConcatenationPlugin(), // 模块串联，大幅减少包大小257k =》239k
       new webpack.optimize.UglifyJsPlugin({
         beautify: false, // 最紧凑的输出
@@ -74,6 +79,7 @@ module.exports = (options = {}) => {
           reduce_vars: true, // 提取出出现多次但是没有定义成变量去引用的静态值
         },
       }),
+
     ],
     devServer: {
       // hot: true,
