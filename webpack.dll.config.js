@@ -21,7 +21,6 @@ module.exports = {
     path: path.resolve(__dirname, 'dll'),
     library,
   },
-
   plugins: [
     new webpack.DefinePlugin({
       'process.env': {

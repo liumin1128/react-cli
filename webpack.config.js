@@ -2,6 +2,7 @@ const { resolve } = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const manifest = require('./dll/vendors-manifest.json');
 
@@ -58,6 +59,12 @@ module.exports = (options = {}) => {
         },
       ],
     },
+    // resolve: {
+    //   alias: {
+    //     react: 'preact-compat',
+    //     'react-dom': 'preact-compat',
+    //   },
+    // },
     plugins: [
       new HtmlWebpackPlugin({
         template: './public/index.html',
@@ -79,6 +86,15 @@ module.exports = (options = {}) => {
           reduce_vars: true, // 提取出出现多次但是没有定义成变量去引用的静态值
         },
       }),
+      new CopyWebpackPlugin([
+        {
+          from: './dll/vendors.dll.js',
+        },
+      ], {
+        ignore: [],
+        copyUnmodified: true,
+        debug: 'debug',
+      }),
 
     ],
     devServer: {
@@ -90,5 +106,6 @@ module.exports = (options = {}) => {
     performance: {
       hints: options.dev ? false : 'warning',
     },
+
   };
 };
