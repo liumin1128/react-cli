@@ -1,5 +1,5 @@
 const { resolve } = require('path');
-// const webpack = require('webpack');
+const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
@@ -62,6 +62,7 @@ module.exports = (options = {}) => {
         template: './public/index.html',
       }),
       new ExtractTextPlugin('index.css'), // 单独打包css
+      new webpack.optimize.ModuleConcatenationPlugin(), // 模块串联，大幅减少包大小
 
     ],
     devServer: {
