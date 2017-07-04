@@ -1,7 +1,7 @@
 const { resolve } = require('path');
 // const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const autoprefixer = require('autoprefixer');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = (options = {}) => {
   return {
@@ -30,38 +30,17 @@ module.exports = (options = {}) => {
         },
         {
           test: /\.css$/,
-          use: [
-            'style-loader',
-            'css-loader',
-            {
-              loader: 'postcss-loader',
-              options: {           // 如果没有options这个选项将会报错 No PostCSS Config found
-                plugins: () => [
-                  // require('postcss-import')({ root: loader.resourcePath }),
-                  autoprefixer({ browsers: ['last 5 versions'] }), // CSS浏览器兼容
-                  // require('cssnano')(),  // 压缩css
-                ],
-              },
-            },
-          ],
+          use: ExtractTextPlugin.extract({
+            fallback: 'style-loader',
+            use: ['css-loader', 'postcss-loader'],
+          }),
         },
         {
           test: /\.less$/,
-          use: [
-            'style-loader',
-            'css-loader',
-            {
-              loader: 'postcss-loader',
-              options: {           // 如果没有options这个选项将会报错 No PostCSS Config found
-                plugins: () => [
-                  // require('postcss-import')({ root: loader.resourcePath }),
-                  autoprefixer({ browsers: ['last 5 versions'] }), // CSS浏览器兼容
-                  // require('cssnano')(),  // 压缩css
-                ],
-              },
-            },
-            'less-loader',
-          ],
+          use: ExtractTextPlugin.extract({
+            fallback: 'style-loader',
+            use: ['css-loader', 'less-loader', 'postcss-loader'],
+          }),
         },
         {
           test: /\.(png|jpg|jpeg|gif|eot|ttf|woff|woff2|svg|svgz)(\?.+)?$/,
@@ -82,6 +61,8 @@ module.exports = (options = {}) => {
       new HtmlWebpackPlugin({
         template: './public/index.html',
       }),
+      new ExtractTextPlugin('index.css'), // 单独打包css
+
     ],
     devServer: {
       // hot: true,
