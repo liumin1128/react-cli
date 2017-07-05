@@ -78,8 +78,12 @@ module.exports = () => {
           from: './dll/vendors.dll.js',
           to: 'dll.js',
         },
+        {
+          from: './public/**/*',
+          to: '[name].[ext]',
+        },
       ], {
-        ignore: [],
+        ignore: ['index.html'],
         copyUnmodified: true,
         debug: 'debug',
       }),
