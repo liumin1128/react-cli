@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server --watch --config webpack.dev.config.js --hot --inline",
+    "start": "webpack-dev-server --config webpack.dev.config.js --hot --inline --progress",
     "dev": "webpack-dev-server -d --hot --env.dev",
-    "build": "rimraf dist && webpack -p --colors --profile --display-modules",
+    "build": "rimraf dist && webpack -p --colors --profile --display-error-details --display-modules --progress",
     "dll": "rimraf dll && webpack --config webpack.dll.config.js -p"
   },
   "repository": {
@@ -49,12 +49,12 @@
     "less": "^2.7.2",
     "less-loader": "^4.0.4",
     "postcss-loader": "^2.0.6",
+    "react-hot-loader": "^3.0.0-beta.7",
     "redux-devtools": "^3.4.0",
     "rimraf": "^2.6.1",
     "style-loader": "^0.18.2",
     "webpack": "^3.0.0",
-    "webpack-dev-server": "^2.5.0",
-    "react-hot-loader": "^3.0.0-beta.7"
+    "webpack-dev-server": "^2.5.0"
   },
   "dependencies": {
     "react": "^15.6.1",
