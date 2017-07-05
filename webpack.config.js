@@ -112,7 +112,6 @@ module.exports = () => {
       new ExtractTextPlugin('index.css'), // 单独打包css
     ],
     devServer: {
-      hot: true,
       port: 8000,
       host: 'localhost',
       historyApiFallback: true,
