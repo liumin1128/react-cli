@@ -68,6 +68,16 @@ module.exports = (options = {}) => {
     //   },
     // },
     plugins: [
+      new CopyWebpackPlugin([
+        {
+          from: './dll/vendors.dll.js',
+          to: 'dll.js',
+        },
+      ], {
+        ignore: [],
+        copyUnmodified: true,
+        debug: 'debug',
+      }),
       new HtmlWebpackPlugin({
         template: './public/index.html',
         hash: true,
@@ -77,6 +87,8 @@ module.exports = (options = {}) => {
           collapseInlineTagWhitespace: true,
         },
       }),
+      new webpack.HotModuleReplacementPlugin(), // 热替换插件
+      // new webpack.NoEmitOnErrorsPlugin() //遇到错误继续
       new ExtractTextPlugin('index.css'), // 单独打包css
       new webpack.DllReferencePlugin({
         context: __dirname,
@@ -93,16 +105,6 @@ module.exports = (options = {}) => {
           collapse_vars: true, // 内嵌定义了但是只用到一次的变量
           reduce_vars: true, // 提取出出现多次但是没有定义成变量去引用的静态值
         },
-      }),
-      new CopyWebpackPlugin([
-        {
-          from: './dll/vendors.dll.js',
-          to: 'dll.js',
-        },
-      ], {
-        ignore: [],
-        copyUnmodified: true,
-        debug: 'debug',
       }),
 
     ],
