@@ -7,7 +7,7 @@ import './style.css';
 import styles from './Index.less';
 
 const Index = () => (<div>
-  <h1 className={styles.test}>Index2221</h1>
+  <h1 className={styles.test}>I9ex1</h1>
 </div>);
 
 function mapStateToProps(state) {

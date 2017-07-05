@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack-dev-server --progress --colors --watch --inline --env.dev --open",
+    "start": "webpack-dev-server --watch --config webpack.dev.config.js --hot --inline",
     "dev": "webpack-dev-server -d --hot --env.dev",
     "build": "rimraf dist && webpack -p --colors --profile --display-modules",
     "dll": "rimraf dll && webpack --config webpack.dll.config.js -p"
@@ -53,12 +53,12 @@
     "rimraf": "^2.6.1",
     "style-loader": "^0.18.2",
     "webpack": "^3.0.0",
-    "webpack-dev-server": "^2.5.0"
+    "webpack-dev-server": "^2.5.0",
+    "react-hot-loader": "^3.0.0-beta.7"
   },
   "dependencies": {
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
-    "react-hot-loader": "^3.0.0-beta.7",
     "react-redux": "^5.0.5",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",

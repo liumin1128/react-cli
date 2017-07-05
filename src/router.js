@@ -36,8 +36,8 @@ const RouterConfig = () => (
       <div>
         <ul>
           <li><Link to="/">Form</Link></li>
-          <li><Link to="/one">One</Link></li>
-          <li><Link to="/two">Two</Link></li>
+          <li><Link to="/one">One2</Link></li>
+          <li><Link to="/two">Two21212121</Link></li>
         </ul>
         <Route path="/" exact component={Form} />
         <Route path="/one" render={() => <h3>One</h3>} />

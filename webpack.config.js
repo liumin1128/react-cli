@@ -8,12 +8,7 @@ const manifest = require('./dll/vendors-manifest.json');
 module.exports = () => {
   return {
     entry: {
-      index: [
-        'react-hot-loader/patch',
-        'webpack-dev-server/client?http://localhost:8000',
-        'webpack/hot/only-dev-server',
-        './src/index.js',
-      ],
+      index: './src/index.js',
     },
     output: {
       path: resolve(__dirname, 'dist'),
@@ -74,6 +69,10 @@ module.exports = () => {
     //   },
     // },
     plugins: [
+      new ExtractTextPlugin('index.css'), // 单独打包css
+      new webpack.DefinePlugin({
+        'process.env.NODE_ENV': '"production"',
+      }),
       new CopyWebpackPlugin([
         {
           from: './dll/vendors.dll.js',
@@ -93,32 +92,22 @@ module.exports = () => {
           collapseInlineTagWhitespace: true,
         },
       }),
-      new webpack.HotModuleReplacementPlugin(), // enable HMR globally
-      new webpack.NoEmitOnErrorsPlugin(), // 遇到错误继续
-      new webpack.NamedModulesPlugin(), // prints more readable module names
+      // new webpack.HotModuleReplacementPlugin(), // enable HMR globally
+      // new webpack.NoEmitOnErrorsPlugin(), // 遇到错误继续
+      // new webpack.NamedModulesPlugin(), // prints more readable module names
       new webpack.DllReferencePlugin({ context: __dirname, manifest }),
       // new webpack.optimize.ModuleConcatenationPlugin(), // 模块串联，大幅减少包大小257k =》239k
-      // new webpack.optimize.UglifyJsPlugin({
-      //   beautify: false, // 最紧凑的输出
-      //   comments: false, // 删除所有的注释
-      //   compress: {
-      //     warnings: false, // 在UglifyJs删除没有用到的代码时不输出警告
-      //     // support_ie8: false, // 还可以兼容ie浏览器
-      //     drop_console: true,  // 删除所有的 `console` 语句
-      //     collapse_vars: true, // 内嵌定义了但是只用到一次的变量
-      //     reduce_vars: true, // 提取出出现多次但是没有定义成变量去引用的静态值
-      //   },
-      // }),
-      new ExtractTextPlugin('index.css'), // 单独打包css
+      new webpack.optimize.UglifyJsPlugin({
+        beautify: false, // 最紧凑的输出
+        comments: false, // 删除所有的注释
+        compress: {
+          warnings: false, // 在UglifyJs删除没有用到的代码时不输出警告
+          // support_ie8: false, // 还可以兼容ie浏览器
+          drop_console: true,  // 删除所有的 `console` 语句
+          collapse_vars: true, // 内嵌定义了但是只用到一次的变量
+          reduce_vars: true, // 提取出出现多次但是没有定义成变量去引用的静态值
+        },
+      }),
     ],
-    devServer: {
-      port: 8000,
-      host: 'localhost',
-      historyApiFallback: true,
-    },
-    // performance: {
-    //   hints: options.dev ? false : 'warning',
-    // },
-
   };
 };
