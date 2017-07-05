@@ -8,7 +8,9 @@ const manifest = require('./dll/vendors-manifest.json');
 
 module.exports = (options = {}) => {
   return {
-    entry: './src/index.js',
+    entry: {
+      index: './src/index.js',
+    },
     output: {
       path: resolve(__dirname, 'dist'),
       filename: '[name].js',
@@ -68,6 +70,12 @@ module.exports = (options = {}) => {
     plugins: [
       new HtmlWebpackPlugin({
         template: './public/index.html',
+        hash: true,
+        minify: {
+          removeAttributeQuotes: true,
+          collapseWhitespace: true,
+          collapseInlineTagWhitespace: true,
+        },
       }),
       new ExtractTextPlugin('index.css'), // 单独打包css
       new webpack.DllReferencePlugin({
@@ -89,6 +97,7 @@ module.exports = (options = {}) => {
       new CopyWebpackPlugin([
         {
           from: './dll/vendors.dll.js',
+          to: 'dll.js',
         },
       ], {
         ignore: [],
