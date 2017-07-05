@@ -2,10 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import './style.css';
-import './Index.less';
+// import './Index.less';
+
+import styles from './Index.less';
 
 const Index = () => (<div>
-  <h1>Index</h1>
+  <h1 className={styles.test}>Index</h1>
 </div>);
 
 function mapStateToProps(state) {

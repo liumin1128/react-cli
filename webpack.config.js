@@ -37,14 +37,14 @@ module.exports = (options = {}) => {
           test: /\.css$/,
           use: ExtractTextPlugin.extract({
             fallback: 'style-loader',
-            use: ['css-loader', 'postcss-loader'],
+            use: ['css-loader?modules', 'postcss-loader'],
           }),
         },
         {
           test: /\.less$/,
           use: ExtractTextPlugin.extract({
             fallback: 'style-loader',
-            use: ['css-loader', 'less-loader', 'postcss-loader'],
+            use: ['css-loader?modules', 'less-loader', 'postcss-loader'],
           }),
         },
         {
