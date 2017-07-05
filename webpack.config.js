@@ -3,13 +3,17 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-
 const manifest = require('./dll/vendors-manifest.json');
 
-module.exports = (options = {}) => {
+module.exports = () => {
   return {
     entry: {
-      index: './src/index.js',
+      index: [
+        'react-hot-loader/patch',
+        'webpack-dev-server/client?http://localhost:8000',
+        'webpack/hot/only-dev-server',
+        './src/index.js',
+      ],
     },
     output: {
       path: resolve(__dirname, 'dist'),
@@ -61,6 +65,8 @@ module.exports = (options = {}) => {
         },
       ],
     },
+    // devtool: 'eval',
+    // devtool: 'cheap-source-map',
     // resolve: {
     //   alias: {
     //     react: 'preact-compat',
@@ -87,36 +93,33 @@ module.exports = (options = {}) => {
           collapseInlineTagWhitespace: true,
         },
       }),
-      new webpack.HotModuleReplacementPlugin(), // 热替换插件
-      // new webpack.NoEmitOnErrorsPlugin() //遇到错误继续
-      new ExtractTextPlugin('index.css'), // 单独打包css
-      new webpack.DllReferencePlugin({
-        context: __dirname,
-        manifest,
-      }),
+      new webpack.HotModuleReplacementPlugin(), // enable HMR globally
+      new webpack.NoEmitOnErrorsPlugin(), // 遇到错误继续
+      new webpack.NamedModulesPlugin(), // prints more readable module names
+      new webpack.DllReferencePlugin({ context: __dirname, manifest }),
       // new webpack.optimize.ModuleConcatenationPlugin(), // 模块串联，大幅减少包大小257k =》239k
-      new webpack.optimize.UglifyJsPlugin({
-        beautify: false, // 最紧凑的输出
-        comments: false, // 删除所有的注释
-        compress: {
-          warnings: false, // 在UglifyJs删除没有用到的代码时不输出警告
-          // support_ie8: false, // 还可以兼容ie浏览器
-          drop_console: true,  // 删除所有的 `console` 语句
-          collapse_vars: true, // 内嵌定义了但是只用到一次的变量
-          reduce_vars: true, // 提取出出现多次但是没有定义成变量去引用的静态值
-        },
-      }),
-
+      // new webpack.optimize.UglifyJsPlugin({
+      //   beautify: false, // 最紧凑的输出
+      //   comments: false, // 删除所有的注释
+      //   compress: {
+      //     warnings: false, // 在UglifyJs删除没有用到的代码时不输出警告
+      //     // support_ie8: false, // 还可以兼容ie浏览器
+      //     drop_console: true,  // 删除所有的 `console` 语句
+      //     collapse_vars: true, // 内嵌定义了但是只用到一次的变量
+      //     reduce_vars: true, // 提取出出现多次但是没有定义成变量去引用的静态值
+      //   },
+      // }),
+      new ExtractTextPlugin('index.css'), // 单独打包css
     ],
     devServer: {
-      // hot: true,
+      hot: true,
       port: 8000,
       host: 'localhost',
       historyApiFallback: true,
     },
-    performance: {
-      hints: options.dev ? false : 'warning',
-    },
+    // performance: {
+    //   hints: options.dev ? false : 'warning',
+    // },
 
   };
 };
