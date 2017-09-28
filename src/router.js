@@ -1,11 +1,11 @@
 import React from 'react';
 import {
   BrowserRouter as Router,
-  Route,   // 这是基本的路由块
-  Link,    // 这是a标签
-  Switch,   // 这是监听空路由的
+  Route, // 这是基本的路由块
+  Link, // 这是a标签
+  Switch, // 这是监听空路由的
   Redirect, // 这是重定向
-  Prompt,   // 防止转换
+  Prompt, // 防止转换
 } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import Index from './routes/Index';
@@ -48,8 +48,8 @@ const RouterConfig = () => (
           <Route path="/will-match" component={WillMatch} />
           <Route component={NoMatch} />
         </Switch>
-        <Prompt  // 防止转换 通常是在表单输入时使用
-          when={false}  // 是否开启防止转换
+        <Prompt // 防止转换 通常是在表单输入时使用
+          when={false} // 是否开启防止转换
           message={location => (`Are you sure you want to go to ${location.pathname}`)}
         />
       </div>
