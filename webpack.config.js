@@ -73,20 +73,23 @@ module.exports = () => {
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': '"production"',
       }),
-      new CopyWebpackPlugin([
+      new CopyWebpackPlugin(
+        [
+          {
+            from: './dll/vendors.dll.js',
+            to: 'dll.js',
+          },
+          {
+            from: './public/**/*',
+            to: '[name].[ext]',
+          },
+        ],
         {
-          from: './dll/vendors.dll.js',
-          to: 'dll.js',
+          ignore: ['index.html'],
+          copyUnmodified: true,
+          debug: 'debug',
         },
-        {
-          from: './public/**/*',
-          to: '[name].[ext]',
-        },
-      ], {
-        ignore: ['index.html'],
-        copyUnmodified: true,
-        debug: 'debug',
-      }),
+      ),
       new HtmlWebpackPlugin({
         template: './public/index.html',
         hash: true,
@@ -107,7 +110,7 @@ module.exports = () => {
         compress: {
           warnings: false, // 在UglifyJs删除没有用到的代码时不输出警告
           // support_ie8: false, // 还可以兼容ie浏览器
-          drop_console: true,  // 删除所有的 `console` 语句
+          drop_console: true, // 删除所有的 `console` 语句
           collapse_vars: true, // 内嵌定义了但是只用到一次的变量
           reduce_vars: true, // 提取出出现多次但是没有定义成变量去引用的静态值
         },
