@@ -1,9 +1,14 @@
-import { takeEvery } from 'redux-saga';
+const test = async ({ query }, { getState, dispatch }) => {
+  try {
+    console.log(query);
+    const store = await getState();
+    console.log(store);
+    await dispatch({ type: 'test/success' });
+  } catch (error) {
+    console.log(error);
+  }
+};
 
-function test() {
-  console.log('9999999999999999');
-}
-
-export default function* watchEffects() {
-  yield* takeEvery('test', test);
-}
+export default {
+  test,
+};
