@@ -1,12 +1,8 @@
 {
-    "presets": [
-      [ "es2015", { "modules": false } ],
-      "stage-0",
-      "react"
-    ],
+    "presets": ["env", "react"],
     "plugins": [
         // "transform-remove-console",
-        "transform-runtime",
+        "transform-runtime"
         // "react-hot-loader/babel"
     ]
 }

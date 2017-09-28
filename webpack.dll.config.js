@@ -12,7 +12,6 @@ module.exports = {
       'react-router',
       'react-router-dom',
       'redux',
-      'redux-saga',
     ],
   },
 
